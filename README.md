@@ -1,8 +1,8 @@
-Challenge
+Challenge ::
 
 Create a web server with two endpoints:
 
-Endpoint 1 (/process/*)
+Endpoint 1 (/process/*) :
 
 This endpoint must accept HTTP request sent using any of the methods (GET, POST, PUT, DELETE) and respond back with a JSON describing the request. To be specific the response JSON must contain the following fields
 
@@ -17,7 +17,7 @@ This endpoint must accept HTTP request sent using any of the methods (GET, POST,
 }
 You are to wait randomly between 15 to 30 seconds before sending back a response to any request. The random response time you choose is what needs to be populated in the duration field.
 
-Endpoint 2 (/stats)
+Endpoint 2 (/stats) :
 
 This endpoint must respond with the following real time statistics:
 
@@ -34,3 +34,10 @@ Websockets Optional, but a big big plus, and we are talking about the /stats end
 If you're up for the challenge, fork this repository and complete your entire solution there. Feel free to use any stack of your choice, and we're open to partial feature submissions as well. Just see it as an opportunity to know each other technically.
 
 Happy hacking, and have fun!
+
+My Contribution ::
+Till now I have developed partial code for this APIs using Spring Boot and you can find its code in this repo.
+I have also deployed an instance of it on Heroku : 
+You can find it here : 
+backbench-varshal.herokuapp.com/process/* and 
+backbench-varshal.herokuapp.com/stats/
