@@ -37,10 +37,11 @@ public class RequestFilter implements Filter{
 	public void doFilter(ServletRequest arg0, ServletResponse arg1, FilterChain arg2)
 			throws IOException, ServletException {
 		HttpServletRequest httpRequest = ((HttpServletRequest) arg0);
-        String req = httpRequest.getMethod() + " " + httpRequest.getRequestURI();
- 
+        String path = httpRequest.getRequestURI();
         int status = ((HttpServletResponse) arg1).getStatus();
-        statsService.storeRequest(httpRequest.getMethod(), status);
+        if(!path.equals("/stats/")) {
+        	statsService.storeRequest(httpRequest.getMethod(), status);
+        }
         arg2.doFilter(arg0, arg1);
 	}
 

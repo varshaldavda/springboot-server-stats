@@ -26,19 +26,25 @@ public class ProcessController {
 	@RequestMapping(value="/*") 
 	public RequestMetaData getResult(HttpServletRequest request, @RequestHeader HttpHeaders headers) {
 		
+		
 		RequestMetaData rmd = new RequestMetaData();
 		rmd.setTime(new Date());
 		URI uri;
 		try {
 			uri = new URI(request.getRequestURI());
 			rmd.setPath(uri);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
 		rmd.setRequestMethod(request.getMethod());
 		rmd.setHeaders(headers);
 		rmd.setDuration(15);
+		Thread.sleep(15000);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		return rmd;
 	}
 }
