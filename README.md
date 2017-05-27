@@ -41,3 +41,9 @@ I have also deployed an instance of it on Heroku :
 You can find it here : 
 backbench-varshal.herokuapp.com/process/* and 
 backbench-varshal.herokuapp.com/stats/
+
+added new EndPoints : 
+/stats/pastmin : Get stats from past minute.
+/health : Running status of the application.
+/metrics : Get information like memory, guage and other features of the running application
+/trace : Get information about last 100 requests.

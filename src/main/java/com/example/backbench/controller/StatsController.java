@@ -3,7 +3,6 @@ package com.example.backbench.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,11 +20,11 @@ public class StatsController {
 	StatsService statsService;
 	
 	@RequestMapping("/")
-	public ResponseEntity<Map<String, Integer>> getStats(HttpServletRequest request) {
+	public ResponseEntity<Map<String, Double>> getStats(HttpServletRequest request) {
 		
-		Map<String, Integer> statsMap = statsService.getRequestMap(); 
+		Map<String, Double> statsMap = statsService.getRequestMap(); 
 		
-		ResponseEntity<Map<String, Integer>> result = new ResponseEntity<Map<String, Integer>>(statsMap, HttpStatus.OK);
+		ResponseEntity<Map<String, Double>> result = new ResponseEntity<Map<String, Double>>(statsMap, HttpStatus.OK);
 		
 		return result;
 	}

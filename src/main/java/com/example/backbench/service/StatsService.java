@@ -14,7 +14,7 @@ public class StatsService {
 	MetricRegistry mr = new MetricRegistry();
 	Meter meter = mr.meter("requests");
 
-	private ConcurrentHashMap<String, Integer> statsMap;
+	private ConcurrentHashMap<String, Double> statsMap;
 	private ConcurrentHashMap<String, Double> pastHourStatsMap;
 	
 	private String TOTAL_COUNT = "TOTAL";
@@ -25,19 +25,19 @@ public class StatsService {
 		statsMap = new ConcurrentHashMap<>();
 		pastHourStatsMap = new ConcurrentHashMap<>();
 		pastHourStatsMap.put(PAST_MINUTE_AVERAGE_RESPONSE_TIME, 0.0);
-		statsMap.put(TOTAL_COUNT, 0);
+		statsMap.put(TOTAL_COUNT, 0.0);
 		meter.mark();
 	}
 	
 	public void storeRequest(String method, int status) {
-		Integer stats = statsMap.get(method);
-		Integer totalStats = statsMap.get(TOTAL_COUNT);
+		Double stats = statsMap.get(method);
+		Double totalStats = statsMap.get(TOTAL_COUNT);
 		if(stats == null) {
-			statsMap.put(method, 1);
+			statsMap.put(method, 1.0);
 		} else {
-			statsMap.put(method, stats);
+			statsMap.put(method, stats + 1);
 		}
-		statsMap.put("AVERAGE_RESPONSE", new Double(meter.getMeanRate()).intValue());
+		statsMap.put("AVERAGE_RESPONSE", meter.getMeanRate());
 		statsMap.put(TOTAL_COUNT, totalStats + 1);
 	}
 	

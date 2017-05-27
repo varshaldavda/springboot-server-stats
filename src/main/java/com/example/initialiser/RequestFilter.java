@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.trace.TraceRepository;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Component;
 
@@ -39,7 +38,8 @@ public class RequestFilter implements Filter{
 		HttpServletRequest httpRequest = ((HttpServletRequest) arg0);
         String path = httpRequest.getRequestURI();
         int status = ((HttpServletResponse) arg1).getStatus();
-        if(!path.equals("/stats/")) {
+        System.out.println(httpRequest.getRequestURI());
+        if(!path.equals("/stats/") && !path.equals("/favicon.ico")) {
         	statsService.storeRequest(httpRequest.getMethod(), status);
         }
         arg2.doFilter(arg0, arg1);
