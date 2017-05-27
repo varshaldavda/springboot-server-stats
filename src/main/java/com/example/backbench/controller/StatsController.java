@@ -3,6 +3,7 @@ package com.example.backbench.controller;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.ws.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,6 +26,15 @@ public class StatsController {
 		Map<String, Integer> statsMap = statsService.getRequestMap(); 
 		
 		ResponseEntity<Map<String, Integer>> result = new ResponseEntity<Map<String, Integer>>(statsMap, HttpStatus.OK);
+		
+		return result;
+	}
+	
+	@RequestMapping("/pastmin")
+	public ResponseEntity<Map<String, Double>> getPastMinStats() {
+		Map<String, Double> pastHourStatsMap = statsService.getPastHourStatsMap();
+		
+		ResponseEntity<Map<String, Double>> result = new ResponseEntity<>(pastHourStatsMap, HttpStatus.OK);
 		
 		return result;
 	}
