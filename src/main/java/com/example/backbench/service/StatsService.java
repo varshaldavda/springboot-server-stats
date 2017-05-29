@@ -3,6 +3,7 @@ package com.example.backbench.service;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.codahale.metrics.Meter;
@@ -15,16 +16,23 @@ public class StatsService {
 	Meter meter = mr.meter("requests");
 
 	private ConcurrentHashMap<String, Double> statsMap;
+	private ConcurrentHashMap<String, Double> pastMinuteStatsMap;
 	private ConcurrentHashMap<String, Double> pastHourStatsMap;
 	
+	Double pastHourResponseTime = new Double(0.0);
+	
+	public void setPastHourResponseTime(Double pastHourResponseTime) {
+		this.pastHourResponseTime = pastHourResponseTime;
+	}
+
 	private String TOTAL_COUNT = "TOTAL";
 	private String PAST_MINUTE_AVERAGE_RESPONSE_TIME = "PAST_MINUTE_AVERAGE_RESPONSE_TIME";
 	
 	
 	public StatsService() {
 		statsMap = new ConcurrentHashMap<>();
-		pastHourStatsMap = new ConcurrentHashMap<>();
-		pastHourStatsMap.put(PAST_MINUTE_AVERAGE_RESPONSE_TIME, 0.0);
+		pastMinuteStatsMap = new ConcurrentHashMap<>();
+		pastMinuteStatsMap.put(PAST_MINUTE_AVERAGE_RESPONSE_TIME, 0.0);
 		statsMap.put(TOTAL_COUNT, 0.0);
 		meter.mark();
 	}
@@ -45,8 +53,18 @@ public class StatsService {
 		return statsMap;
 	}
 	
-	public Map getPastHourStatsMap() {
-		pastHourStatsMap.put(PAST_MINUTE_AVERAGE_RESPONSE_TIME, meter.getOneMinuteRate());
-		return pastHourStatsMap;
+	public Double getPastMinuteStatsMap() {
+		// pastMinuteStatsMap.put(PAST_MINUTE_AVERAGE_RESPONSE_TIME, meter.getOneMinuteRate());
+		return meter.getOneMinuteRate();
+	}
+	
+	@Scheduled(cron="0 0 * * * *")
+	public Double getPastHourResponseTime() {
+		return pastHourResponseTime / 60;
+	}
+	
+	@Scheduled(cron="0 * * * * *")
+	public void setPerMinuteResponseTime() {
+		pastHourResponseTime += meter.getOneMinuteRate();
 	}
 }

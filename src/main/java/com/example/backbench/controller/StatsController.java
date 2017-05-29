@@ -30,12 +30,22 @@ public class StatsController {
 	}
 	
 	@RequestMapping("/pastmin")
-	public ResponseEntity<Map<String, Double>> getPastMinStats() {
-		Map<String, Double> pastHourStatsMap = statsService.getPastHourStatsMap();
+	public ResponseEntity<Double> getPastMinStats() {
+		Double pastMinStats = statsService.getPastMinuteStatsMap();
 		
-		ResponseEntity<Map<String, Double>> result = new ResponseEntity<>(pastHourStatsMap, HttpStatus.OK);
+		ResponseEntity<Double> result = new ResponseEntity<>(pastMinStats, HttpStatus.OK);
 		
 		return result;
 	}
-
+	
+	@RequestMapping("/pasthour")
+	public ResponseEntity<Double> getPastHourStats() {
+		Double pastHourStats = statsService.getPastHourResponseTime();
+		
+		ResponseEntity<Double> result = new ResponseEntity<Double>(pastHourStats, HttpStatus.OK);
+		
+		statsService.setPastHourResponseTime(0.0);
+		
+		return result;
+	}
 }

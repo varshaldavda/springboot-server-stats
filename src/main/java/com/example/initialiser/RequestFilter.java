@@ -38,8 +38,7 @@ public class RequestFilter implements Filter{
 		HttpServletRequest httpRequest = ((HttpServletRequest) arg0);
         String path = httpRequest.getRequestURI();
         int status = ((HttpServletResponse) arg1).getStatus();
-        System.out.println(httpRequest.getRequestURI());
-        if(!path.equals("/stats/") && !path.equals("/favicon.ico")) {
+        if(!path.startsWith("/stats/") && !path.equals("/favicon.ico")) {
         	statsService.storeRequest(httpRequest.getMethod(), status);
         }
         arg2.doFilter(arg0, arg1);
